@@ -36,14 +36,14 @@ def register():
             flash(" ACCOUNT EXISTED, PLEASE LOG IN!")
             session.pop("user",None)
             session.pop("pass", None)
-            return render_template("register.html")
+            return redirect(url_for("register"))
 
         else:
             flash("REGISTER SUCCESFULLY, You can now log in")
             account = users(user, password)
             db.session.add(account)
             db.session.commit()
-            return render_template("register.html")
+            return redirect(url_for("register"))
     else:
         return render_template("register.html")
 
