@@ -29,7 +29,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(150), nullable=False, unique=True)
     password = db.Column(db.String(100), nullable=False)
-    tid = db.Column(db.String(100), nullable=False)
+    tid = db.Column(db.String(100), nullable=True)
     
     def __init__(self, email,password, tid):
         self.email = email
@@ -183,6 +183,9 @@ if __name__ == "__main__":
         if stat(DATAFILE).st_size != 0:
             markers = json.load(file)
             
+    with app.app_context():
+        db.create_all()
+
     scheduler.start()
     # Exit the scheduler as the server shuts down
     atexit.register(lambda: scheduler.shutdown())
